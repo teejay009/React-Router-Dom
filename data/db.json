@@ -26,9 +26,21 @@
     },
     {
       "id": 5,
-      "title": "testing",
-      "date": "November 02, 2023 10:41:08 AM",
+      "title": "testingman",
+      "date": "November 02, 2023 3:05:23 PM",
       "body": "the testing is a sample of subset"
+    },
+    {
+      "id": 6,
+      "title": "tahlahu",
+      "date": "November 02, 2023 3:04:50 PM",
+      "body": "Name=\"newPostForm\" onSubmit={(e) => e.preventDefault()}>\n      <label htmlFor=\"postTitle\">Edit Title</label>\n      <input \n        type=\"text\" \n        required\n        value={editTitle}\n        onChange={(e) => setEditTitle(e.target.value)}\n      />\n\n      <label htmlFor=\"postBody\">Edit Body</label>\n      <textarea \n        id=\"postBody\" \n        required value={editBody} \n        onChange={(e) => setEditBody(e.target.value)} \n        />\n      <button type=\"submit\" onClick={() => handleEdit(post.id)}>Submit</button>\n      </form>"
+    },
+    {
+      "id": 7,
+      "title": "supreme",
+      "date": "November 02, 2023 3:10:55 PM",
+      "body": " are in need of small chops, call on supreme international nigeria limited,\ncall for\nBarbecue chicken,"
     }
   ]
 }
