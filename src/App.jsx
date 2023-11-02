@@ -8,66 +8,93 @@ import PostPage from "./PostPage";
 import Missing from "./Missing";
 import About from "./About";
 import HomeLayout from "./HomeLayout";
+import api from "./api/posts";
+import EditPost from "./EditPost";
 
 const App = () => {
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      title: "Rocco",
-      date: "July 01, 2021 11:17:36 AM",
-      body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet corrupti facere dignissimos laborum! Numquam autem inventore vel architecto nam iure id placeat? Iste, maxime nisi.",
-    },
-    {
-      id: 2,
-      title: "Kanas",
-      date: "September 21, 2026 12:19:36 AM",
-      body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet c.",
-    },
-    {
-      id: 3,
-      title: "Muhammed",
-      date: "July 01, 2024 11:55:36 AM",
-      body: " consectetur adipisicing elit. Amet corrupti facere dignissimos laborum! Numquam autem inventore vel architecto nam iure id placeat? Iste, ",
-    },
-    {
-      id: 4,
-      title: "Supreme",
-      date: "August 03, 2025 13:42:36 AM",
-      body: " dignissimos laborum! Numquam autem inventore vel architecto nam consectetur adipisicing elit. Amet corrupti facere  iure id placeat? Iste, ",
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [search, setSearch] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [postBody, setPostBody] = useState("");
+  const [editTitle, setEditTitle] = useState("");
+  const [editBody, setEditBody] = useState("");
 
   useEffect(() => {
-    const filterResult = posts.filter(post =>
-       post.body.toLowerCase().includes(search.toLowerCase())
-       || 
-       post.title.toLowerCase().includes(search.toLowerCase()))
-       setSearchResult(filterResult.reverse());
+    const filterResult = posts.filter(
+      (post) =>
+        post.body.toLowerCase().includes(search.toLowerCase()) ||
+        post.title.toLowerCase().includes(search.toLowerCase())
+    );
+    setSearchResult(filterResult.reverse());
+  }, [posts, search]);
 
-  }, [posts, search])
-
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await api.get("/posts");
+        setPosts(response.data);
+      } catch (error) {
+        if (error.message) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else {
+          console.log(`Error: ${error.message}`);
+        }
+      }
+    };
+    fetchPost();
+  }, []);
   const navigate = useNavigate();
 
-  const handleDelete = (id) => {
-    const postList = posts.filter((post) => post.id !== id);
-    setPosts(postList);
-    navigate("/");
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/posts/${id}`)
+      const postList = posts.filter((post) => post.id !== id);
+      setPosts(postList);
+      navigate("/");
+
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const id = posts.length ? posts[posts.length-1].id + 1 : 1
-    const date = format(new Date(), 'MMMM dd, yyyy pp')
-    const newPost = {id, title: postTitle, date, body: postBody }
-    const allPost = [...posts, newPost]
-    setPosts(allPost)
-    setPostTitle('')
-    setPostBody('')
-    navigate('/')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
+    const date = format(new Date(), "MMMM dd, yyyy pp");
+    const newPost = { id, title: postTitle, date, body: postBody };
+
+    try {
+      const response = await api.post("/posts", newPost);
+      const allPost = [...posts, response.data];
+      setPosts(allPost);
+      setPostTitle("");
+      setPostBody("");
+      navigate("/");
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
+  };
+
+  const handleEdit = async (id) => {
+    const date = format(new Date(), "MMMM dd, yyyy pp");
+    const updatedPost = { id, title: editTitle, date, body: editBody };
+    try {
+      const response = await api.put(`/posts/${id}`, updatedPost);
+      setPosts(posts.map(post => post.id === id ? {...response.data} : post));
+      setEditTitle('');
+      setEditBody('')
+      navigate('/')
+
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
+
+
+    
+
   }
 
   return (
@@ -95,6 +122,9 @@ const App = () => {
             element={<PostPage posts={posts} handleDelete={handleDelete} />}
           />
         </Route>
+        <Route path="/edit/:id" element={<EditPost posts={posts} handleEdit={handleEdit}
+        editTitle={editTitle} setEditTitle={setEditTitle} editBody={editBody} setEditBody=
+        {setEditBody} />}  />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Missing />} />
       </Route>

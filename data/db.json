@@ -1,0 +1,34 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Roc",
+      "date": "November 02, 2023 12:54:28 PM",
+      "body": " ipsum dolor sit, amet consectetur adipisicing elit. Amet corrupti facere dignissimos laborum! Numquam autem inventore vel architecto nam iure id placeat? Iste, maxime nisi."
+    },
+    {
+      "id": 2,
+      "title": "Kanas",
+      "date": "September 21, 2026 12:19:36 AM",
+      "body": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet c."
+    },
+    {
+      "id": 3,
+      "title": "Muhammed",
+      "date": "July 01, 2024 11:55:36 AM",
+      "body": " consectetur adipisicing elit. Amet corrupti facere dignissimos laborum! Numquam autem inventore vel architecto nam iure id placeat? Iste, "
+    },
+    {
+      "id": 4,
+      "title": "Supreme",
+      "date": "August 03, 2025 13:42:36 AM",
+      "body": " dignissimos laborum! Numquam autem inventore vel architecto nam consectetur adipisicing elit. Amet corrupti facere  iure id placeat? Iste, "
+    },
+    {
+      "id": 5,
+      "title": "testing",
+      "date": "November 02, 2023 10:41:08 AM",
+      "body": "the testing is a sample of subset"
+    }
+  ]
+}
