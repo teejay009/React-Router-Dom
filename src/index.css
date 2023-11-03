@@ -63,7 +63,7 @@ body {
 
 .Nav {
   width: 100%;
-  background-color: #333;
+  background-color: #000;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -216,12 +216,11 @@ body {
   cursor: pointer;
 }
 
-.editButton{
+.editButton {
   background-color: #333;
-
 }
 
-.deleteButton{
+.deleteButton {
   background-color: red;
 }
 
